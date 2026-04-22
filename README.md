@@ -2,7 +2,7 @@ current2classic
 
 > Inspired by [@artbutmakeitsports](https://www.instagram.com/artbutmakeitsports/)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_USERNAME/current2classic/blob/main/current2classicMAGICHOURBOUNTY.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-wX_TSw9Q-n28HmimSkrCHCx0CJjKeCo?usp=sharing)
 
 ---
 
