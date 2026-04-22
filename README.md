@@ -1,4 +1,4 @@
-current2classic 
+current2classic
 
 > Inspired by [@artbutmakeitsports](https://www.instagram.com/artbutmakeitsports/)
 
@@ -43,6 +43,7 @@ Photo → CLIP embed + color hist + edge grid
 
 - [`openai/clip-vit-large-patch14`](https://huggingface.co/openai/clip-vit-large-patch14) — vision-language embeddings
 - [`huggan/wikiart`](https://huggingface.co/datasets/huggan/wikiart) — 81k painting dataset (3k indexed by default)
+- [`biglam/european_art`](https://huggingface.co/datasets/biglam/european_art) — 15k paintings from 25+ institutions (Met, Rijksmuseum, British Museum, Art Institute of Chicago and more), 12th–18th century
 - [FAISS](https://github.com/facebookresearch/faiss) — fast vector similarity search
 - [Gradio](https://gradio.app) — interactive web UI
 - OpenCV — HSV histograms + Canny edge composition features
@@ -92,17 +93,21 @@ Bump `DATASET_SIZE` to 10k–15k for noticeably better match quality. The index 
 
 ## Scaling up
 
-To improve match quality, increase the dataset size and optionally merge additional sources:
+To improve match quality, increase the dataset size and merge additional sources. The recommended starting point is pairing WikiArt with `biglam/european_art` — both are streamable, free, and together cover ~96k paintings with strong classical coverage:
 
 ```python
-# Larger WikiArt slice
-DATASET_SIZE = 15000
+# Recommended combo — WikiArt + European Art (~96k total)
+sources = [
+    ('huggan/wikiart',      'train', lambda x: True),
+    ('biglam/european_art', 'train', lambda x: True),
+]
 
-# Additional painting datasets worth merging:
-# - biglam/european_art     (15k paintings, 25+ institutions, 12th–18th century)
-# - metmuseum/openaccess    (400k+ works, filter to paintings + public domain)
-# - Mitsua/art-museums-pd-440k  (293k CC0 images from major museums)
+# Further expansion:
+# - metmuseum/openaccess        (400k+ works, filter Classification=="Paintings" + Is Public Domain==True)
+# - Mitsua/art-museums-pd-440k  (293k CC0 images from Met, Rijksmuseum, Art Institute of Chicago, and more)
 ```
+
+`biglam/european_art` is especially useful for this project — it skews heavily toward portraits, figure scenes, and dramatic compositions, which are the genres that pair best with sports and action photography.
 
 For 30k+ paintings, switch the CLIP index to `IndexIVFFlat` for faster search:
 
